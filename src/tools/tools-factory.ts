@@ -1,10 +1,24 @@
-import { initLogger } from '../utils/logger.ts'
+import { initLogger, type Logger } from '../utils/logger.ts'
 import { ApiDocsService } from '../services/api-docs-service.ts'
 
-const logger = initLogger()
+const logger: Logger = initLogger()
 const apiDocsService = new ApiDocsService()
 
-export async function createSearchTool () {
+interface ToolDefinition {
+  name: string
+  description: string
+  inputSchema: {
+    type: string
+    properties: Record<string, any>
+  }
+  handler: (params: Record<string, any>) => Promise<{ content: { type: string; text: string }[] }>
+}
+
+interface ToolsDictionary {
+  [key: string]: ToolDefinition
+}
+
+export async function createSearchTool (): Promise<ToolDefinition> {
   const { modules } = await apiDocsService.getApiDocsModules()
 
   return {
@@ -15,7 +29,7 @@ export async function createSearchTool () {
       type: 'object',
       properties: {},
     },
-    async handler (args) {
+    async handler () {
       logger.info({
         msg: 'Tool execution started: search-nodejs-modules-api-documentation',
       })
@@ -31,7 +45,7 @@ export async function createSearchTool () {
 }
 
 export async function createModuleTools () {
-  const tools = {}
+  const tools: ToolsDictionary = {}
   const { modules } = await apiDocsService.getApiDocsModules()
 
   modules.forEach((module) => {

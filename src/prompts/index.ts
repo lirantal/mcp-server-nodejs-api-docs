@@ -1,16 +1,30 @@
+import type { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import {
   GetPromptRequestSchema,
   ListPromptsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js'
 
-import { initLogger } from '../utils/logger.ts'
+import { initLogger, type Logger } from '../utils/logger.ts'
 
-const logger = initLogger()
+const logger: Logger = initLogger()
 
-export async function initializePrompts (server) {
+interface PromptsDictionary {
+  [name: string]: {
+    name: string
+    description: string
+    arguments: Array<{
+      name: string
+      description: string
+      required: boolean
+    }>
+    handler: (args: Record<string, any>) => Promise<{ messages: Array<{ role: string; content: { type: string; text: string } }> }>
+  }
+}
+
+export async function initializePrompts (server: Server): Promise<void> {
   logger.info({ msg: 'Initializing prompts...' })
 
-  const prompts = {
+  const prompts: PromptsDictionary = {
     'nodejs-api-lookup': {
       name: 'nodejs-api-lookup',
       description:
@@ -91,7 +105,7 @@ export async function initializePrompts (server) {
     // eslint-disable-next-line security/detect-object-injection
     const prompt = prompts[name]
     if (prompt) {
-      return await prompt.handler(args)
+      return await prompt.handler(args || {})
     }
 
     throw new Error('Prompt not found')

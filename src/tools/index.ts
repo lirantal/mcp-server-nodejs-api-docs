@@ -1,3 +1,4 @@
+import type { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import {
   ListToolsRequestSchema,
   CallToolRequestSchema,
@@ -5,7 +6,7 @@ import {
 
 import { createSearchTool, createModuleTools } from './tools-factory.ts'
 
-export async function initializeTools (server) {
+export async function initializeTools (server: Server): Promise<void> {
   // Create the search tool
   const searchTool = await createSearchTool()
 
@@ -40,6 +41,6 @@ export async function initializeTools (server) {
     }
     const tool = tools[request.params.name]
 
-    return await tool.handler(request.params.arguments)
+    return await tool.handler(request.params.arguments || {})
   })
 }

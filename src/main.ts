@@ -5,7 +5,7 @@ import { setupProcessErrorHandlers } from './utils/error-handlers.ts'
 
 const logger = initLogger()
 
-export async function startServer () {
+export async function startServer (): Promise<void> {
   let server
   try {
     server = await createMcpServer()

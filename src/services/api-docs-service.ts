@@ -1,7 +1,51 @@
-import { initLogger } from '../utils/logger.ts'
+import { initLogger, type Logger } from '../utils/logger.ts'
 import { DocsFormatter } from './docs-formatter-service.ts'
 
+// Type definitions for Node.js API documentation structure
+interface ApiMethod {
+  textRaw: string
+  desc?: string
+  name?: string
+  classes?: ApiClass[]
+  methods?: ApiMethod[]
+}
+
+interface ApiClass {
+  textRaw: string
+  desc?: string
+  name?: string
+  methods?: ApiMethod[]
+}
+
+interface ApiModule {
+  textRaw: string
+  displayName?: string
+  name: string
+  desc?: string
+  classes?: ApiClass[]
+  methods?: ApiMethod[]
+  modules?: ApiModule[]
+}
+
+interface ApiDocsData {
+  modules: ApiModule[]
+}
+
+interface ModulesData {
+  modules: ApiModule[]
+}
+
+interface FormattingOptions {
+  class?: string
+  method?: string
+}
+
 export class ApiDocsService {
+  private logger: Logger
+  private docsFormatter: DocsFormatter
+  private url: string
+  private modulesData: ModulesData | null
+
   constructor () {
     this.logger = initLogger()
     this.docsFormatter = new DocsFormatter()
@@ -9,14 +53,14 @@ export class ApiDocsService {
     this.modulesData = null
   }
 
-  async fetchNodeApiDocs () {
+  async fetchNodeApiDocs (): Promise<ApiDocsData> {
     this.logger.info({ msg: 'Fetching Node.js API documentation...' })
     try {
       const response = await fetch(this.url)
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`)
       }
-      const data = await response.json()
+      const data = await response.json() as ApiDocsData
       this.logger.info({ msg: 'Successfully fetched Node.js API documentation', url: this.url })
       return data
     } catch (error) {
@@ -25,11 +69,11 @@ export class ApiDocsService {
     }
   }
 
-  normalizeModuleName (name) {
+  normalizeModuleName (name: string): string {
     return this.docsFormatter.normalizeModuleName(name)
   }
 
-  async getApiDocsModules () {
+  async getApiDocsModules (): Promise<ModulesData> {
     if (this.modulesData) {
       // return from cached data
       return this.modulesData
@@ -40,7 +84,8 @@ export class ApiDocsService {
     // Remove entries without Class or Method
     const originalCount = apiDocs.modules?.length
     apiDocs.modules = apiDocs.modules.filter(module =>
-      module?.classes?.length > 0 || module?.methods?.length > 0
+      module?.classes?.length && module.classes.length > 0 || 
+      module?.methods?.length && module.methods.length > 0
     )
     this.logger.info({ msg: `Modules count: ${originalCount}` })
 
@@ -52,7 +97,7 @@ export class ApiDocsService {
     return this.modulesData
   }
 
-  async getFormattedModuleDoc (moduleData, options = {}) {
+  async getFormattedModuleDoc (moduleData: ApiModule, options: FormattingOptions = {}): Promise<string> {
     if (!moduleData) {
       return ''
     }
@@ -60,7 +105,7 @@ export class ApiDocsService {
     return this.docsFormatter.createModuleDocumentation(moduleData, options)
   }
 
-  async getFormattedModuleSummary (moduleData) {
+  async getFormattedModuleSummary (moduleData: ApiModule): Promise<string> {
     if (!moduleData) {
       return ''
     }

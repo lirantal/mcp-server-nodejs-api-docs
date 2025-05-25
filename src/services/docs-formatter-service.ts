@@ -1,3 +1,34 @@
+// Type definitions for Node.js API documentation structure
+interface ApiMethod {
+  textRaw: string
+  desc?: string
+  name?: string
+  classes?: ApiClass[]
+  methods?: ApiMethod[]
+}
+
+interface ApiClass {
+  textRaw: string
+  desc?: string
+  name?: string
+  methods?: ApiMethod[]
+}
+
+interface ApiModule {
+  textRaw: string
+  displayName?: string
+  name: string
+  desc?: string
+  classes?: ApiClass[]
+  methods?: ApiMethod[]
+  modules?: ApiModule[]
+}
+
+interface FormattingOptions {
+  class?: string
+  method?: string
+}
+
 /**
  * Service responsible for formatting Node.js API documentation into readable markdown content
  */
@@ -10,7 +41,7 @@ export class DocsFormatter {
   /**
    * Formats content by adding extra newlines for better markdown rendering
    */
-  formatContent (content) {
+  formatContent (content: string): string {
     if (!content) return ''
     return content.replace(/\n/g, '\n\n')
   }
@@ -18,12 +49,12 @@ export class DocsFormatter {
   /**
    * Normalizes a module name for use as a tool identifier
    */
-  normalizeModuleName (name) {
+  normalizeModuleName (name: string): string {
     const toolName = `get_api_for-${name.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, '')}`
     return toolName.length > 64 ? toolName.slice(0, 63) : toolName
   }
 
-  formatModuleSummary (module) {
+  formatModuleSummary (module: ApiModule): string {
     let content = `## ${module.displayName || module.textRaw} (${module.name})\n`
 
     if (
@@ -48,7 +79,7 @@ export class DocsFormatter {
     return content + '\n'
   }
 
-  formatItems (items, title, query) {
+  formatItems (items: ApiMethod[] | ApiClass[] | ApiModule[], title: string, query?: string): string {
     if (!items || items.length === 0) return ''
 
     let sectionContent = ''
@@ -72,7 +103,7 @@ export class DocsFormatter {
 
     // Phase 2, we dive deeper into nested methods inside module?.modules?.methods
     items.forEach((submodule) => {
-      if (submodule?.methods) {
+      if ('methods' in submodule && submodule?.methods) {
         sectionContent += `### ${submodule.textRaw} Methods\n\n`
         submodule.methods.forEach((submethod) => {
           sectionContent += `#### ${submethod.textRaw}\n`
@@ -84,16 +115,16 @@ export class DocsFormatter {
     return sectionContent
   }
 
-  createModuleDocumentation (module, { class: classQuery, method: methodQuery } = {}) {
+  createModuleDocumentation (module: ApiModule, { class: classQuery, method: methodQuery }: FormattingOptions = {}): string {
     let content = `# ${module.textRaw}\n\n`
 
     if (module.desc) {
       content += `## Description\n${this.formatContent(module.desc)}\n\n`
     }
 
-    content += this.formatItems(module.classes, 'Classes', classQuery)
-    content += this.formatItems(module.methods, 'Methods', methodQuery)
-    content += this.formatItems(module.modules, 'Submodules', methodQuery)
+    content += this.formatItems(module.classes || [], 'Classes', classQuery)
+    content += this.formatItems(module.methods || [], 'Methods', methodQuery)
+    content += this.formatItems(module.modules || [], 'Submodules', methodQuery)
 
     return content
   }

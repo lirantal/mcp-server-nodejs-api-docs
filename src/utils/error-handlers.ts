@@ -1,6 +1,7 @@
 import process from 'node:process'
+import type { Logger } from '../utils/logger.js'
 
-export function setupProcessErrorHandlers (logger) {
+export function setupProcessErrorHandlers (logger: Logger): void {
   process.on('SIGINT', () => {
     logger.info({ msg: 'Received SIGINT. Shutting down...' })
     process.exit(0)

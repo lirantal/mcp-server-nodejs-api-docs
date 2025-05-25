@@ -1,12 +1,14 @@
+import type { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import {
   ListResourcesRequestSchema,
   ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js'
-import { initLogger } from '../utils/logger.ts'
+import { initLogger, type Logger } from '../utils/logger.ts'
+import type { ReadResourceRequest } from '@modelcontextprotocol/sdk/types.js'
 
-const logger = initLogger()
+const logger: Logger = initLogger()
 
-export async function initializeResources (server) {
+export async function initializeResources (server: Server): Promise<void> {
   logger.info({ msg: 'Initializing resources...' })
 
   const resourceNodejsReleasesChartURL =
@@ -33,7 +35,7 @@ export async function initializeResources (server) {
       name: 'Node.js Releases Schedule Chart',
       description: 'A chart showing the release schedule of Node.js versions.',
       mimeType: 'image/svg+xml',
-      handler: async (request) => {
+      handler: async (request: ReadResourceRequest) => {
         logger.info({ msg: 'Resource URI Access:', uri: request.params.uri })
 
         return {
