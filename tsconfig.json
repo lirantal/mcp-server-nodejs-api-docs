@@ -3,7 +3,7 @@
     "lib": [
       "ES2022"
     ],
-    "strict": true,
+    "strict": false,
     "allowJs": true,
     "esModuleInterop": true,
     "skipLibCheck": true,

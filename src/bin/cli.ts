@@ -1,12 +1,7 @@
 #!/usr/bin/env node
 import { debuglog } from 'node:util'
-import { add } from '../main.ts'
-
+import { startServer } from 'src/main.ts'
 const debug = debuglog('mcp-server-nodejs-api-docs')
 
-async function init () {
-    const sum = await add(1,2)
-    debug(sum.toString())
-}
-
-init()
+debug('Starting Server...')
+startServer()
