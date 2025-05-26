@@ -64,14 +64,12 @@ export class DocsFormatter {
       content += '### Methods\n'
 
       module?.methods?.forEach((method) => {
-        content += `#### ${method.textRaw}\n`
-        content += `#### ${method.desc}\n`
+          content += `#### ${method.textRaw}\n`
       })
 
       module?.modules?.forEach((submodules) => {
         submodules?.methods?.forEach((method) => {
-          content += `#### ${method.textRaw}\n`
-          content += `#### ${method.desc}\n`
+            content += `#### ${method.textRaw}\n`
         })
       })
     }
