@@ -26,6 +26,16 @@ npx mcp-server-nodejs-api-docs
 
 You can debug calls for the MCP Server by inspecting the file `/tmp/mcp-server-nodejs-docs.log` which this MCP Server writes to.
 
+## Usage: as a Docker container
+
+You can run this MCP Server as a Docker container by using the following command:
+
+```bash
+docker pull ghcr.io/lirantal/mcp-server-nodejs-api-docs:latest
+```
+
+You can also use the Docker image directly in your MCP Server configuration for various applications, see examples below.
+
 ## Usage for Claude Desktop:
 
 Edit your Claude Desktop MCP Servers configuration file (located on macOS here: `~/Library/Application Support/Claude/claude_desktop_config.json`) and add the following:
@@ -36,6 +46,19 @@ Edit your Claude Desktop MCP Servers configuration file (located on macOS here: 
     "nodejs-api-docs": {
       "command": "npx",
       "args": ["-y", "mcp-server-nodejs-api-docs"]
+    }
+  }
+}
+```
+
+or with the Docker image:
+
+```json
+{
+  "mcpServers": {
+    "nodejs-api-docs": {
+      "command": "docker",
+      "args": ["run", "--rm", "--init", "-e", "DOCKER_CONTAINER=true", "ghcr.io/lirantal/mcp-server-nodejs-api-docs:latest"]
     }
   }
 }
