@@ -18,11 +18,13 @@
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Responsible%20Disclosure-yellow.svg" alt="Responsible Disclosure Policy" /></a>
 </p>
 
-## Usage: CLI
+## Usage: Generic CLI
 
 ```bash
 npx mcp-server-nodejs-api-docs
 ```
+
+You can debug calls for the MCP Server by inspecting the file `/tmp/mcp-server-nodejs-docs.log` which this MCP Server writes to.
 
 ## Usage for Claude Desktop:
 
