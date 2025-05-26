@@ -58,7 +58,7 @@ or with the Docker image:
   "mcpServers": {
     "nodejs-api-docs": {
       "command": "docker",
-      "args": ["run", "--rm", "--init", "-e", "DOCKER_CONTAINER=true", "ghcr.io/lirantal/mcp-server-nodejs-api-docs:latest"]
+      "args": ["run", "-i", "--rm", "--init", "-e", "DOCKER_CONTAINER=true", "ghcr.io/lirantal/mcp-server-nodejs-api-docs:latest"]
     }
   }
 }
