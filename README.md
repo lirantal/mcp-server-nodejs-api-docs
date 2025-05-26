@@ -5,7 +5,7 @@
 </h1>
 
 <p align="center">
-  mcp server
+  An MCP Server for Node.js API documentation
 </p>
 
 <p align="center">
@@ -18,18 +18,40 @@
   <a href="./SECURITY.md"><img src="https://img.shields.io/badge/Security-Responsible%20Disclosure-yellow.svg" alt="Responsible Disclosure Policy" /></a>
 </p>
 
-## Install
-
-```bash
-npm ({ npmClient }) =&gt; {
-      return npmClient === &#39;npm&#39; ? &#39;install&#39; : &#39;add&#39;
-    } mcp-server-nodejs-api-docs
-```
 ## Usage: CLI
 
 ```bash
-// @TODO
-const {} = require('mcp-server-nodejs-api-docs')
+npx mcp-server-nodejs-api-docs
+```
+
+## Usage for Claude Desktop:
+
+Edit your Claude Desktop MCP Servers configuration file (located on macOS here: `~/Library/Application Support/Claude/claude_desktop_config.json`) and add the following:
+
+```json
+{
+    "mcpServers": {
+      "nodejs-api-docs": {
+        "command": "npx",
+        "args": ["-y", "mcp-server-nodejs-api-docs"]
+      }
+    }
+  }
+```
+
+## Usage for Cursor AI:
+
+Edit your Cursor AI MCP file (located at `~/.cursor/mcp.json`) and add the following:
+
+```json
+{
+  "mcpServers": {
+    "server-name": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-nodejs-api-docs"],
+    }
+  }
+}
 ```
 
 ## Contributing
