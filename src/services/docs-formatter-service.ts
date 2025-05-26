@@ -50,8 +50,8 @@ export class DocsFormatter {
    * Normalizes a module name for use as a tool identifier
    */
   normalizeModuleName (name: string): string {
-    const toolName = `get_api_for-${name.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, '')}`
-    return toolName.length > 64 ? toolName.slice(0, 63) : toolName
+    const toolName = `${name.toLowerCase().replace(/[^a-zA-Z0-9_-]/g, '')}`
+    return toolName.length > 47 ? toolName.slice(0, 47) : toolName
   }
 
   formatModuleSummary (module: ApiModule): string {
