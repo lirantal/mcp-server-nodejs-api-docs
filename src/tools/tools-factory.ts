@@ -71,7 +71,7 @@ export async function createModuleTools () {
             type: 'string',
             description: 'The method name to search for.',
           },
-          required: [],
+          required: false,
         },
       },
       async handler (params) {
