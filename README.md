@@ -30,13 +30,13 @@ Edit your Claude Desktop MCP Servers configuration file (located on macOS here: 
 
 ```json
 {
-    "mcpServers": {
-      "nodejs-api-docs": {
-        "command": "npx",
-        "args": ["-y", "mcp-server-nodejs-api-docs"]
-      }
+  "mcpServers": {
+    "nodejs-api-docs": {
+      "command": "npx",
+      "args": ["-y", "mcp-server-nodejs-api-docs"]
     }
   }
+}
 ```
 
 ## Usage for Cursor AI:
@@ -46,12 +46,26 @@ Edit your Cursor AI MCP file (located at `~/.cursor/mcp.json`) and add the follo
 ```json
 {
   "mcpServers": {
-    "server-name": {
+    "nodejs-api-docs": {
       "command": "npx",
-      "args": ["-y", "mcp-server-nodejs-api-docs"],
+      "args": ["-y", "mcp-server-nodejs-api-docs"]
     }
   }
 }
+```
+
+## Development
+
+To build the project with Docker locally run:
+
+```bash
+docker build -t mcp-server-nodejs-api-docs .
+```
+
+Then run the container as follows for your MCP Server configuration:
+
+```bash
+docker run -i --rm --init -e DOCKER_CONTAINER=true mcp-server-nodejs-api-docs
 ```
 
 ## Contributing
