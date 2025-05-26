@@ -1,6 +1,6 @@
 {
   "name": "mcp-server-nodejs-api-docs",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An MCP Server for Node.js API documentation",
   "types": "dist/main.d.ts",
   "type": "module",
