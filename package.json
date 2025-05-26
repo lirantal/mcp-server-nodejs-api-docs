@@ -33,8 +33,8 @@
     "bin"
   ],
   "scripts": {
-    "start": "node index.js --debug",
-    "debug": "npx @modelcontextprotocol/inspector node index.js --debug",
+    "start": "node dist/bin/cli.mjs --debug",
+    "debug": "npm run build && npx @modelcontextprotocol/inspector node dist/bin/cli.mjs --debug",
     "build": "tsc && tsup",
     "lint": "eslint . && npm run lint:lockfile",
     "lint:fix": "eslint . --fix",
