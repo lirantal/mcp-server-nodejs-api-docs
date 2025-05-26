@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.0.3
+
+### Patch Changes
+
+- 832af87: fix: shorten tool name to allow for 60 chars combined limit on server name + tool name
+
 ## 1.0.2
 
 ### Patch Changes
