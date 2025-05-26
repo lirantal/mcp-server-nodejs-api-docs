@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.0.4
+
+### Patch Changes
+
+- 62e8a3c: Docker usage instructions
+
 ## 1.0.3
 
 ### Patch Changes
