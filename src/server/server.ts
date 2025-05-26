@@ -8,10 +8,10 @@ const logger: Logger = initLogger()
 
 export async function createMcpServer (): Promise<Server> {
   const serverInfo = {
-    name: 'nodejs-module-api-documentation',
+    name: 'nodejs-api-docs',
     description:
       'Search built-in core Node.js modules API Documentation. Use whenever the user asks questions about Node.js API, Node.js modules or Node.js functions.',
-    version: '1.0.0',
+    version: '1.0.4',
   }
 
   const server = new Server(
