@@ -1,7 +1,7 @@
 import type { Server } from '@modelcontextprotocol/sdk/server/index.js'
 import {
   ListResourcesRequestSchema,
-  ReadResourceRequestSchema,
+  ReadResourceRequestSchema
 } from '@modelcontextprotocol/sdk/types.js'
 import { initLogger, type Logger } from '../utils/logger.ts'
 import { CacheService } from '../services/cache-service.ts'
@@ -10,20 +10,8 @@ import type { ReadResourceRequest } from '@modelcontextprotocol/sdk/types.js'
 const logger: Logger = initLogger()
 const cacheService = new CacheService()
 
-export async function initializeResources (server: Server): Promise<void> {
+export async function initializeResources(server: Server): Promise<void> {
   logger.info({ msg: 'Initializing resources...' })
-
-  const resourceNodejsReleasesChartURL =
-    'https://raw.githubusercontent.com/nodejs/Release/main/schedule.svg?sanitize=true'
-
-  // Use cache service to fetch the SVG with 7-day expiration
-  const resourceNodejsReleasesChartSVGText = await cacheService.fetchHttpWithCache(
-    resourceNodejsReleasesChartURL,
-    {
-      responseType: 'text',
-      ttlDays: 7
-    }
-  )
 
   const resources = [
     {
@@ -34,16 +22,28 @@ export async function initializeResources (server: Server): Promise<void> {
       handler: async (request: ReadResourceRequest) => {
         logger.info({ msg: 'Resource URI Access:', uri: request.params.uri })
 
+        const resourceNodejsReleasesChartURL =
+          'https://raw.githubusercontent.com/nodejs/Release/main/schedule.svg?sanitize=true'
+
+        // Fetch SVG data with cache on each request
+        const resourceNodejsReleasesChartSVGText = await cacheService.fetchHttpWithCache(
+          resourceNodejsReleasesChartURL,
+          {
+            responseType: 'text',
+            ttlDays: 7
+          }
+        )
+
         return {
           contents: [
             {
               uri: request.params.uri,
-              text: resourceNodejsReleasesChartSVGText,
-            },
-          ],
+              text: resourceNodejsReleasesChartSVGText
+            }
+          ]
         }
-      },
-    },
+      }
+    }
   ]
 
   server.setRequestHandler(ListResourcesRequestSchema, async () => {
@@ -52,12 +52,12 @@ export async function initializeResources (server: Server): Promise<void> {
         uri: resource.uri,
         name: resource.name,
         description: resource.description,
-        mimeType: resource.mimeType || 'text/plain',
+        mimeType: resource.mimeType || 'text/plain'
       }
     })
 
     return {
-      resources: resourcesList,
+      resources: resourcesList
     }
   })
 
