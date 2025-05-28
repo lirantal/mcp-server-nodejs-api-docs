@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.0.5
+
+### Patch Changes
+
+- 7227c4a: Feat: resources are fetched via a caching mechanism
+
 ## 1.0.4
 
 ### Patch Changes
