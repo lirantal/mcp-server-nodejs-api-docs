@@ -1,5 +1,6 @@
 import { initLogger, type Logger } from '../utils/logger.ts'
 import { DocsFormatter } from './docs-formatter-service.ts'
+import { CacheService } from './cache-service.ts'
 
 // Type definitions for Node.js API documentation structure
 interface ApiMethod {
@@ -43,30 +44,23 @@ interface FormattingOptions {
 export class ApiDocsService {
   private logger: Logger
   private docsFormatter: DocsFormatter
+  private cacheService: CacheService
   private url: string
   private modulesData: ModulesData | null
 
   constructor () {
     this.logger = initLogger()
     this.docsFormatter = new DocsFormatter()
+    this.cacheService = new CacheService()
     this.url = 'https://nodejs.org/docs/latest/api/all.json'
     this.modulesData = null
   }
 
   async fetchNodeApiDocs (): Promise<ApiDocsData> {
-    this.logger.info({ msg: 'Fetching Node.js API documentation...' })
-    try {
-      const response = await fetch(this.url)
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`)
-      }
-      const data = await response.json() as ApiDocsData
-      this.logger.info({ msg: 'Successfully fetched Node.js API documentation', url: this.url })
-      return data
-    } catch (error) {
-      this.logger.error({ err: error, msg: `Failed to fetch Node.js API documentation: ${this.url}` })
-      throw error
-    }
+    return this.cacheService.fetchHttpWithCache(this.url, {
+      responseType: 'json',
+      ttlDays: 7 // Cache for 7 days
+    }) as Promise<ApiDocsData>
   }
 
   normalizeModuleName (name: string): string {

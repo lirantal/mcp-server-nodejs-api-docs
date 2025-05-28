@@ -4,30 +4,26 @@ import {
   ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js'
 import { initLogger, type Logger } from '../utils/logger.ts'
+import { CacheService } from '../services/cache-service.ts'
 import type { ReadResourceRequest } from '@modelcontextprotocol/sdk/types.js'
 
 const logger: Logger = initLogger()
+const cacheService = new CacheService()
 
 export async function initializeResources (server: Server): Promise<void> {
   logger.info({ msg: 'Initializing resources...' })
 
   const resourceNodejsReleasesChartURL =
     'https://raw.githubusercontent.com/nodejs/Release/main/schedule.svg?sanitize=true'
-  const resourceNodejsReleasesChart = await fetch(
-    resourceNodejsReleasesChartURL
+
+  // Use cache service to fetch the SVG with 7-day expiration
+  const resourceNodejsReleasesChartSVGText = await cacheService.fetchHttpWithCache(
+    resourceNodejsReleasesChartURL,
+    {
+      responseType: 'text',
+      ttlDays: 7
+    }
   )
-
-  if (!resourceNodejsReleasesChart.ok) {
-    logger.error({
-      msg: `Failed to fetch Node.js releases chart: ${resourceNodejsReleasesChart.status} ${resourceNodejsReleasesChart.statusText}`,
-    })
-    throw new Error(
-      `Failed to fetch Node.js releases chart: ${resourceNodejsReleasesChart.status} ${resourceNodejsReleasesChart.statusText}`
-    )
-  }
-
-  const resourceNodejsReleasesChartSVGText =
-    await resourceNodejsReleasesChart.text()
 
   const resources = [
     {
