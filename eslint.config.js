@@ -27,6 +27,10 @@ export default [
       'security/detect-pseudoRandomBytes': 'error',
       'space-before-function-paren': 'off',
       'object-curly-spacing': 'off',
+      'n/no-missing-import': ['error', {
+        allowModules: ['@modelcontextprotocol/sdk'],
+        resolvePaths: ['/path/to/a/modules/directory']
+      }]
     },
     languageOptions: {
       ecmaVersion: 2024,

@@ -33,10 +33,6 @@ interface FormattingOptions {
  * Service responsible for formatting Node.js API documentation into readable markdown content
  */
 export class DocsFormatter {
-  constructor () {
-    // Initialize any needed properties here
-  }
-
   /**
    * Formats content by adding extra newlines for better markdown rendering
    */
