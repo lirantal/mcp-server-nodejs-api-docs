@@ -4,6 +4,8 @@ import type { Logger } from 'pino'
 // Re-export pino types for use in other modules
 export type { Logger } from 'pino'
 
+// @TODO change the log file path to be cross-platform compatible
+// and support other OSs
 const logFilePath = '/tmp/mcp-server-nodejs-docs.log'
 
 export function initLogger (): Logger {
