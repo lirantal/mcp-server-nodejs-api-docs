@@ -78,8 +78,8 @@ export class ApiDocsService {
     // Remove entries without Class or Method
     const originalCount = apiDocs.modules?.length
     apiDocs.modules = apiDocs.modules.filter(module =>
-      module?.classes?.length && module.classes.length > 0 ||
-      module?.methods?.length && module.methods.length > 0
+      (module?.classes?.length && module.classes.length > 0) ||
+      (module?.methods?.length && module.methods.length > 0)
     )
     this.logger.info({ msg: `Modules count: ${originalCount}` })
 
