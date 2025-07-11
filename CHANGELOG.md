@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.1.1
+
+### Patch Changes
+
+- 6f2b9cf: feat: descriptive instructions for mcp server and tools
+
 ## 1.1.0
 
 ### Minor Changes
