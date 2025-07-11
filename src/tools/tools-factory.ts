@@ -22,17 +22,27 @@ interface ToolsDictionary {
 export async function createSearchTool (): Promise<ToolDefinition> {
   const { modules } = await apiDocsService.getApiDocsModules()
 
+  const toolName = 'search-nodejs-modules-api-documentation'
+
   return {
-    name: 'search-nodejs-modules-api-documentation',
-    description:
-      '**HIGH PRIORITY** List all Node.js modules and their methods. **ALWAYS** consult this tool first to look-up the correct module and then use the specific module tool for full api details',
+    name: toolName,
+    description: `
+      <use_case>
+        Use this tool to search across all Node.js built-in core modules API documentation and get back a list of core modules and their methods when you want to search and look-up Node.js API support
+      </use_case>
+      <important_notes>
+        1. HIGH PRIORITY: *ALWAYS* use this tool first so that you can search for Node.js modules and their methods
+        2. Ideally you want to suggest users the use of built-in Node.js API rather than third-party libraries
+        3. This tool will return a list of all Node.js core modules and their methods
+      </important_notes>
+      `,
     inputSchema: {
       type: 'object',
       properties: {},
     },
     async handler () {
       logger.info({
-        msg: 'Tool execution started: search-nodejs-modules-api-documentation',
+        msg: `Tool execution started: ${toolName}`,
       })
       let listContent = 'Available Node.js core modules and their methods:\n\n'
 
@@ -53,8 +63,31 @@ export async function createSearchTool (): Promise<ToolDefinition> {
  * and returns their data as a response.
  */
 export async function createModulesTool () {
-  const toolName = 'api-docs-module-description'
-  const toolDescription = 'Use this tool to retrieve Node.js API documentation for a specific module or class, including its methods and descriptions.'
+  const toolName = 'retrieve-nodejs-modules-api-documentation'
+  const toolDescription = `
+  Retrieve, fetch, and get Node.js API documentation for a specific module or class.
+
+  <use_case>
+    Use this tool to retrieve Node.js API documentation for a specific module or class.
+  </use_case>
+
+  <example>
+    User asks: "How can I user colors in my terminal console output using Node.js?"
+
+    You call the \`retrieve-nodejs-modules-api-documentation\` MCP tool with the following parameters:
+    \`\`\`json
+    {
+      "module": "util",
+      "method": "styleText"
+    }
+    \`\`\`
+  </example>
+
+  <important_notes>
+    1. If you don't know the module or class name, you can use the \`search-nodejs-modules-api-documentation\` tool to get a list of all Node.js core API modules and their methods to search for it first and then call this tool.
+    2. This tool will return the documentation for the specified module or class, including its methods and properties.
+  </important_notes>
+  `
 
   const tools: ToolsDictionary = {}
 
