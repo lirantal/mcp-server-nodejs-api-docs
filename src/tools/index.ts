@@ -4,19 +4,23 @@ import {
   CallToolRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js'
 
-import { createSearchTool, createModuleTools } from './tools-factory.ts'
+import { createSearchTool, createModulesTool } from './tools-factory.ts'
 
 export async function initializeTools (server: Server): Promise<void> {
   // Create the search tool
   const searchTool = await createSearchTool()
 
-  // Create individual module tools
-  const moduleTools = await createModuleTools()
+  // Refactor to avoid the `createModuleTools` that created a single tool for each
+  // module which resulted in potentially too many tools being registered (about 50)
+  // and instead create a single tool that can handle all modules by using a sort of
+  // look up method
+  // const moduleTools = await createModuleTools()
+  const modulesTool = await createModulesTool()
 
   // Combine all tools
   const tools = {
     [searchTool.name]: searchTool,
-    ...moduleTools
+    ...modulesTool
   }
 
   // Create tool list for MCP

@@ -13,7 +13,7 @@ export class CacheService {
   private logger: Logger
   private cache: Map<string, CacheEntry<any>>
 
-  constructor() {
+  constructor () {
     this.logger = initLogger()
     this.cache = new Map()
   }
@@ -29,7 +29,7 @@ export class CacheService {
   ): Promise<T> {
     const { ttlDays = 7 } = options
     const now = Date.now()
-    
+
     // Check if we have valid cached data
     const cached = this.cache.get(key)
     if (cached && cached.expiresAt > now) {
@@ -41,19 +41,19 @@ export class CacheService {
     this.logger.info({ msg: `Cache miss for key: ${key}, fetching fresh data...` })
     try {
       const data = await fetcher()
-      
+
       // Calculate expiration time
       const expiresAt = now + (ttlDays * 24 * 60 * 60 * 1000)
-      
+
       // Store in cache
       this.cache.set(key, { data, expiresAt })
-      
-      this.logger.info({ 
-        msg: `Cached data for key: ${key}`, 
+
+      this.logger.info({
+        msg: `Cached data for key: ${key}`,
         expiresAt: new Date(expiresAt).toISOString(),
-        ttlDays 
+        ttlDays
       })
-      
+
       return data
     } catch (error) {
       this.logger.error({ err: error, msg: `Failed to fetch data for key: ${key}` })
@@ -64,22 +64,22 @@ export class CacheService {
   /**
    * Convenience method for fetching HTTP resources with caching
    */
-  async fetchHttpWithCache(
+  async fetchHttpWithCache (
     url: string,
     options: CacheOptions & { responseType?: 'json' | 'text' } = {}
   ): Promise<any> {
     const { responseType = 'json', ...cacheOptions } = options
-    
+
     return this.fetchWithCache(
       url,
       async () => {
         this.logger.info({ msg: `Fetching HTTP resource: ${url}` })
         const response = await fetch(url)
-        
+
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status} ${response.statusText}`)
         }
-        
+
         const data = responseType === 'json' ? await response.json() : await response.text()
         this.logger.info({ msg: `Successfully fetched HTTP resource: ${url}` })
         return data
@@ -91,7 +91,7 @@ export class CacheService {
   /**
    * Clear a specific cache entry
    */
-  clearCache(key: string): void {
+  clearCache (key: string): void {
     this.cache.delete(key)
     this.logger.info({ msg: `Cleared cache for key: ${key}` })
   }
@@ -99,17 +99,17 @@ export class CacheService {
   /**
    * Clear all expired cache entries
    */
-  clearExpiredCache(): void {
+  clearExpiredCache (): void {
     const now = Date.now()
     let clearedCount = 0
-    
+
     for (const [key, entry] of this.cache.entries()) {
       if (entry.expiresAt <= now) {
         this.cache.delete(key)
         clearedCount++
       }
     }
-    
+
     if (clearedCount > 0) {
       this.logger.info({ msg: `Cleared ${clearedCount} expired cache entries` })
     }
@@ -118,7 +118,7 @@ export class CacheService {
   /**
    * Get cache statistics
    */
-  getCacheStats(): { size: number; keys: string[] } {
+  getCacheStats (): { size: number; keys: string[] } {
     return {
       size: this.cache.size,
       keys: Array.from(this.cache.keys())

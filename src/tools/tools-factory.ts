@@ -10,6 +10,7 @@ interface ToolDefinition {
   inputSchema: {
     type: string
     properties: Record<string, any>
+    required?: string[]
   }
   handler: (params: Record<string, any>) => Promise<{ content: { type: string; text: string }[] }>
 }
@@ -42,6 +43,72 @@ export async function createSearchTool (): Promise<ToolDefinition> {
       return { content: [{ type: 'text', text: listContent }] }
     },
   }
+}
+
+/**
+ * One tool that serves documentation for all modules
+ *
+ * Instead of overwhelming the LLM with as many tools as there are core modules
+ * in Node.js, this creates a single tool that accepts modules information
+ * and returns their data as a response.
+ */
+export async function createModulesTool () {
+  const toolName = 'api-docs-module-description'
+  const toolDescription = 'Use this tool to retrieve Node.js API documentation for a specific module or class, including its methods and descriptions.'
+
+  const tools: ToolsDictionary = {}
+
+  const tool: ToolDefinition = {
+    name: toolName,
+    description: toolDescription,
+    inputSchema: {
+      type: 'object',
+      properties: {
+        module: {
+          type: 'string',
+          description: 'The module or class name to retrieve Node.js API documentation for',
+        },
+        method: {
+          type: 'string',
+          description: 'The method name to retrieve Node.js API documentation for',
+        },
+      },
+      required: ['module'],
+    },
+    async handler (params) {
+      logger.info({ msg: `Tool execution started: ${toolName}`, params })
+      try {
+        // TBD extract the module or class name out of all modules documentation
+        const { modules } = await apiDocsService.getApiDocsModules()
+
+        // @TODO the tool only uses the module name to find a matching module
+        // and doesn't match against the method name or the class name
+        // probably good enough for results but open to improvements, especially
+        // if there's more data points around methods and classes that should
+        // be returned
+        const module = modules.find((mod) => apiDocsService.normalizeModuleName(mod.name) === params.module)
+        if (!module) {
+          return {
+            content: [{ type: 'text', text: `Module not found: ${params.module}\n\nMaybe you spelled the module name wrong?` }],
+          }
+        }
+
+        const content = await apiDocsService.getFormattedModuleDoc(module, { class: params.module, method: params.method })
+        logger.info({ msg: `Tool execution successful: ${toolName}` })
+        return { content: [{ type: 'text', text: content }] }
+      } catch (error) {
+        logger.error({
+          err: error,
+          params,
+          msg: `Tool execution failed: ${toolName}`,
+        })
+        throw error
+      }
+    },
+  }
+
+  tools[toolName] = tool
+  return tools
 }
 
 export async function createModuleTools () {

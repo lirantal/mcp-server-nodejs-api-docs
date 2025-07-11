@@ -10,7 +10,7 @@ import type { ReadResourceRequest } from '@modelcontextprotocol/sdk/types.js'
 const logger: Logger = initLogger()
 const cacheService = new CacheService()
 
-export async function initializeResources(server: Server): Promise<void> {
+export async function initializeResources (server: Server): Promise<void> {
   logger.info({ msg: 'Initializing resources...' })
 
   const resources = [

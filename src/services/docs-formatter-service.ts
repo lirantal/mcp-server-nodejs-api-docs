@@ -33,7 +33,6 @@ interface FormattingOptions {
  * Service responsible for formatting Node.js API documentation into readable markdown content
  */
 export class DocsFormatter {
-  // eslint-disable-next-line no-useless-constructor
   constructor () {
     // Initialize any needed properties here
   }
@@ -56,6 +55,7 @@ export class DocsFormatter {
 
   formatModuleSummary (module: ApiModule): string {
     let content = `## ${module.displayName || module.textRaw} (${module.name})\n`
+    content += `Module name or Class name: \`${module.name}\`\n\n`
 
     if (
       (module.methods && module.methods.length > 0) ||
@@ -64,12 +64,12 @@ export class DocsFormatter {
       content += '### Methods\n'
 
       module?.methods?.forEach((method) => {
-          content += `#### ${method.textRaw}\n`
+        content += `#### ${method.textRaw}\n`
       })
 
       module?.modules?.forEach((submodules) => {
         submodules?.methods?.forEach((method) => {
-            content += `#### ${method.textRaw}\n`
+          content += `#### ${method.textRaw}\n`
         })
       })
     }
