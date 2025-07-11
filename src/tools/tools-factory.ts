@@ -111,53 +111,56 @@ export async function createModulesTool () {
   return tools
 }
 
-export async function createModuleTools () {
-  const tools: ToolsDictionary = {}
-  const { modules } = await apiDocsService.getApiDocsModules()
+//
+// Note: Archived in favor of a single tool that serves all modules
+//
+// export async function createModuleTools () {
+//   const tools: ToolsDictionary = {}
+//   const { modules } = await apiDocsService.getApiDocsModules()
 
-  modules.forEach((module) => {
-    const { name, textRaw } = module
-    const toolName = apiDocsService.normalizeModuleName(name)
+//   modules.forEach((module) => {
+//     const { name, textRaw } = module
+//     const toolName = apiDocsService.normalizeModuleName(name)
 
-    logger.info({ msg: `Creating tool: ${toolName}` })
+//     logger.info({ msg: `Creating tool: ${toolName}` })
 
-    const descFormatted = `Node.js API: ${textRaw}`
+//     const descFormatted = `Node.js API: ${textRaw}`
 
-    // eslint-disable-next-line security/detect-object-injection
-    tools[toolName] = {
-      name: toolName,
-      description: descFormatted,
-      inputSchema: {
-        type: 'object',
-        properties: {
-          class: {
-            type: 'string',
-            description: 'The class name to search for.',
-          },
-          method: {
-            type: 'string',
-            description: 'The method name to search for.',
-          },
-          required: false,
-        },
-      },
-      async handler (params) {
-        logger.info({ msg: `Tool execution started: ${toolName}`, params })
-        try {
-          const content = await apiDocsService.getFormattedModuleDoc(module, params)
-          logger.info({ msg: `Tool execution successful: ${toolName}` })
-          return { content: [{ type: 'text', text: content }] }
-        } catch (error) {
-          logger.error({
-            err: error,
-            params,
-            msg: `Tool execution failed: ${toolName}`,
-          })
-          throw error
-        }
-      },
-    }
-  })
+//     // eslint-disable-next-line security/detect-object-injection
+//     tools[toolName] = {
+//       name: toolName,
+//       description: descFormatted,
+//       inputSchema: {
+//         type: 'object',
+//         properties: {
+//           class: {
+//             type: 'string',
+//             description: 'The class name to search for.',
+//           },
+//           method: {
+//             type: 'string',
+//             description: 'The method name to search for.',
+//           },
+//           required: false,
+//         },
+//       },
+//       async handler (params) {
+//         logger.info({ msg: `Tool execution started: ${toolName}`, params })
+//         try {
+//           const content = await apiDocsService.getFormattedModuleDoc(module, params)
+//           logger.info({ msg: `Tool execution successful: ${toolName}` })
+//           return { content: [{ type: 'text', text: content }] }
+//         } catch (error) {
+//           logger.error({
+//             err: error,
+//             params,
+//             msg: `Tool execution failed: ${toolName}`,
+//           })
+//           throw error
+//         }
+//       },
+//     }
+//   })
 
-  return tools
-}
+//   return tools
+// }
