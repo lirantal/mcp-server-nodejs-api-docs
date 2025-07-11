@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.1.0
+
+### Minor Changes
+
+- 8955908: feat: better tool configuration that exposes 2 tools instead of 50+
+
 ## 1.0.5
 
 ### Patch Changes
