@@ -11,6 +11,7 @@ export default [
   pluginSecurity.configs.recommended,
   {
     rules: {
+      'n/hashbang': 'off',
       'n/no-process-exit': 'off',
       'n/no-unsupported-features': 'off',
       'n/no-unpublished-require': 'off',
