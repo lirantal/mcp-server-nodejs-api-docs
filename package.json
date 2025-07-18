@@ -73,7 +73,7 @@
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
     "@changesets/cli": "^2.27.7",
-    "@modelcontextprotocol/inspector": "^0.15.0",
+    "@modelcontextprotocol/inspector": "^0.16.1",
     "@types/node": "^24.0.1",
     "c8": "^10.1.2",
     "eslint": "^9.6.0",
@@ -95,6 +95,6 @@
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.12.0",
     "pino": "^9.7.0",
-    "zod": "^3.25.28"
+    "zod": "^4.0.5"
   }
 }
