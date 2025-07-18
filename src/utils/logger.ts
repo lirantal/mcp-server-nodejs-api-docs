@@ -1,12 +1,12 @@
 import { pino } from 'pino'
 import type { Logger } from 'pino'
+import * as path from 'path'
+import * as os from 'os'
 
 // Re-export pino types for use in other modules
 export type { Logger } from 'pino'
 
-// @TODO change the log file path to be cross-platform compatible
-// and support other OSs
-const logFilePath = '/tmp/mcp-server-nodejs-docs.log'
+const logFilePath = path.join(os.tmpdir(), 'mcp-server-nodejs-docs.log')
 
 export function initLogger (): Logger {
   const logLevel = process.argv.includes('--debug') ? 'debug' : 'info'
