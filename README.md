@@ -40,12 +40,27 @@ You can also use the Docker image directly in your MCP Server configuration for 
 
 Edit your Claude Desktop MCP Servers configuration file (located on macOS here: `~/Library/Application Support/Claude/claude_desktop_config.json`) and add the following:
 
+on macOS or Linux:
+
 ```json
 {
   "mcpServers": {
     "nodejs-api-docs": {
       "command": "npx",
       "args": ["-y", "mcp-server-nodejs-api-docs"]
+    }
+  }
+}
+```
+
+for Windows users:
+
+```json
+{
+  "mcpServers": {
+    "nodejs-api-docs": {
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "mcp-server-nodejs-api-docs"]
     }
   }
 }
