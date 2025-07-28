@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.1.2
+
+### Patch Changes
+
+- 936e617: fix: add shebang for CLI executable
+
 ## 1.1.1
 
 ### Patch Changes

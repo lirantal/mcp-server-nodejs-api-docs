@@ -24,7 +24,7 @@
 npx mcp-server-nodejs-api-docs
 ```
 
-You can debug calls for the MCP Server by inspecting the file `/tmp/mcp-server-nodejs-docs.log` which this MCP Server writes to.
+You can debug calls for the MCP Server by inspecting the file `mcp-server-nodejs-docs.log` in your system's temporary directory (e.g., `/tmp` on Unix-like systems or `%TEMP%` on Windows) which this MCP Server writes to.
 
 ## Usage: as a Docker container
 
