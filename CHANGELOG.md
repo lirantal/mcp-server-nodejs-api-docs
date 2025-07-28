@@ -1,5 +1,11 @@
 # mcp-server-nodejs-api-docs
 
+## 1.1.3
+
+### Patch Changes
+
+- dfeee6e: Documentation update for Windows instructions
+
 ## 1.1.2
 
 ### Patch Changes
