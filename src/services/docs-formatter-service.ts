@@ -81,10 +81,10 @@ export class DocsFormatter {
     // Phase 1, look up data inside the current object
     const filteredItems = query
       ? items.filter(
-          (item) =>
-            item.textRaw.toLowerCase().includes(query.toLowerCase()) ||
+        (item) =>
+          item.textRaw.toLowerCase().includes(query.toLowerCase()) ||
             (item.desc && item.desc.toLowerCase().includes(query.toLowerCase()))
-        )
+      )
       : items
 
     if (filteredItems.length !== 0) {
