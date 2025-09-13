@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/lirantal-mcp-server-nodejs-api-docs-badge.png)](https://mseep.ai/app/lirantal-mcp-server-nodejs-api-docs)
+
 <!-- markdownlint-disable -->
 
 <p align="center"><h1 align="center">
