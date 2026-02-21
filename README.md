@@ -9,9 +9,9 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.org/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/v/mcp-server-nodejs-api-docs" alt="npm version"/></a>
-  <a href="https://www.npmjs.org/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/license/mcp-server-nodejs-api-docs" alt="license"/></a>
-  <a href="https://www.npmjs.org/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/dt/mcp-server-nodejs-api-docs" alt="downloads"/></a>
+  <a href="https://www.npmjs.com/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/v/mcp-server-nodejs-api-docs" alt="npm version"/></a>
+  <a href="https://www.npmjs.com/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/license/mcp-server-nodejs-api-docs" alt="license"/></a>
+  <a href="https://www.npmjs.com/package/mcp-server-nodejs-api-docs"><img src="https://badgen.net/npm/dt/mcp-server-nodejs-api-docs" alt="downloads"/></a>
   <a href="https://github.com/lirantal/mcp-server-nodejs-api-docs/actions?workflow=CI"><img src="https://github.com/lirantal/mcp-server-nodejs-api-docs/workflows/CI/badge.svg" alt="build"/></a>
   <a href="https://codecov.io/gh/lirantal/mcp-server-nodejs-api-docs"><img src="https://badgen.net/codecov/c/github/lirantal/mcp-server-nodejs-api-docs" alt="codecov"/></a>
   <a href="https://snyk.io/test/github/lirantal/mcp-server-nodejs-api-docs"><img src="https://snyk.io/test/github/lirantal/mcp-server-nodejs-api-docs/badge.svg" alt="Known Vulnerabilities"/></a>
