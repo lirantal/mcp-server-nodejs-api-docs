@@ -1,4 +1,4 @@
-import { pino } from 'pino'
+import pino from 'pino'
 import type { Logger } from 'pino'
 import * as path from 'path'
 import * as os from 'os'
