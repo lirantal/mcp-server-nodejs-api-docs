@@ -11,7 +11,7 @@ interface CacheOptions {
 
 export class CacheService {
   private logger: Logger
-  private cache: Map<string, CacheEntry<any>>
+  private cache: Map<string, CacheEntry<unknown>>
 
   constructor () {
     this.logger = initLogger()
@@ -34,7 +34,7 @@ export class CacheService {
     const cached = this.cache.get(key)
     if (cached && cached.expiresAt > now) {
       this.logger.info({ msg: `Cache hit for key: ${key}` })
-      return cached.data
+      return cached.data as T
     }
 
     // Cache miss or expired - fetch fresh data
@@ -67,7 +67,7 @@ export class CacheService {
   async fetchHttpWithCache (
     url: string,
     options: CacheOptions & { responseType?: 'json' | 'text' } = {}
-  ): Promise<any> {
+  ): Promise<unknown> {
     const { responseType = 'json', ...cacheOptions } = options
 
     return this.fetchWithCache(
