@@ -9,10 +9,10 @@ interface ToolDefinition {
   description: string
   inputSchema: {
     type: string
-    properties: Record<string, any>
+    properties: Record<string, unknown>
     required?: string[]
   }
-  handler: (params: Record<string, any>) => Promise<{ content: { type: string; text: string }[] }>
+  handler: (params: Record<string, unknown>) => Promise<{ content: { type: string; text: string }[] }>
 }
 
 interface ToolsDictionary {
@@ -122,11 +122,11 @@ export async function createModulesTool () {
         const module = modules.find((mod) => apiDocsService.normalizeModuleName(mod.name) === params.module)
         if (!module) {
           return {
-            content: [{ type: 'text', text: `Module not found: ${params.module}\n\nMaybe you spelled the module name wrong?` }],
+            content: [{ type: 'text', text: `Module not found: ${String(params.module)}\n\nMaybe you spelled the module name wrong?` }],
           }
         }
 
-        const content = await apiDocsService.getFormattedModuleDoc(module, { class: params.module, method: params.method })
+        const content = await apiDocsService.getFormattedModuleDoc(module, { class: params.module as string, method: params.method as string })
         logger.info({ msg: `Tool execution successful: ${toolName}` })
         return { content: [{ type: 'text', text: content }] }
       } catch (error) {
