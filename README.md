@@ -107,6 +107,10 @@ Then run the container as follows for your MCP Server configuration:
 docker run -i --rm --init -e DOCKER_CONTAINER=true mcp-server-nodejs-api-docs
 ```
 
+## Documentation
+
+- [Project documentation](./docs/README.md) - development, testing, architecture, and conventions.
+
 ## Contributing
 
 Please consult [CONTRIBUTING](./CONTRIBUTING.md) for guidelines on contributing to this project.
