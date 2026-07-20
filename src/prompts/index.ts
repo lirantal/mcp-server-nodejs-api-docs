@@ -17,7 +17,7 @@ interface PromptsDictionary {
       description: string
       required: boolean
     }>
-    handler: (args: Record<string, any>) => Promise<{ messages: Array<{ role: string; content: { type: string; text: string } }> }>
+    handler: (args: Record<string, unknown>) => Promise<{ messages: Array<{ role: string; content: { type: string; text: string } }> }>
   }
 }
 
@@ -49,7 +49,7 @@ export async function initializePrompts (server: Server): Promise<void> {
             role: 'user',
             content: {
               type: 'text',
-              text: `Use the Node.js API Documentation tool to provide documentation for the module: ${moduleName}.`,
+              text: `Use the Node.js API Documentation tool to provide documentation for the module: ${String(moduleName)}.`,
             },
           })
 
@@ -61,7 +61,7 @@ export async function initializePrompts (server: Server): Promise<void> {
             role: 'user',
             content: {
               type: 'text',
-              text: `Use the Node.js API Documentation tool to provide documentation about the function or method: ${methodQuery}.`,
+              text: `Use the Node.js API Documentation tool to provide documentation about the function or method: ${String(methodQuery)}.`,
             },
           })
 

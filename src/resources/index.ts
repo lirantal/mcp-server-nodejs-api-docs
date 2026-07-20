@@ -32,7 +32,7 @@ export async function initializeResources (server: Server): Promise<void> {
             responseType: 'text',
             ttlDays: 7
           }
-        )
+        ) as string
 
         return {
           contents: [
