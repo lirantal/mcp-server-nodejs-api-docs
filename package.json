@@ -72,7 +72,7 @@
   },
   "devDependencies": {
     "@changesets/changelog-github": "^1.0.1",
-    "@changesets/cli": "^2.31.0",
+    "@changesets/cli": "^3.0.3",
     "@eslint/js": "^10.0.1",
     "@modelcontextprotocol/inspector": "^0.21.2",
     "@types/node": "^25.0.2",
