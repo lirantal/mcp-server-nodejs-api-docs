@@ -19,4 +19,8 @@ npm install
 
 ## Repository Notes
 
+The Docker builder and runtime use Node 24.22.1 to match the package engine
+requirements. Pull requests build the image without publishing it; pushes to
+`main` publish and attest the image using the workflow token.
+
 This repository is organized around the root package `mcp-server-nodejs-api-docs`.
