@@ -24,6 +24,9 @@ export default defineConfig([
   pluginN.configs['flat/recommended-script'],
   pluginSecurity.configs.recommended,
   {
+    settings: {
+      n: { typescriptExtensionMap: [['.ts', '.js']] }
+    },
     rules: {
       'n/hashbang': 'off',
       'n/no-process-exit': 'off',
